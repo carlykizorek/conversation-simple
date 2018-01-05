@@ -151,6 +151,7 @@ After you have the app deployed and running, you can explore the source files an
 * Use the Conversation tool to train the service for new intents, or to modify the dialog flow. For more information, see the [Conversation service documentation][docs_landing].
 
 ## Deploying to Bluemix
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/team-wolfpack/conversation-simple&branch=master)
 
 You can use Cloud Foundry to deploy your local version of the app to Bluemix.
 
