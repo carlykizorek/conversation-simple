@@ -10,8 +10,8 @@ You created your service instance. Click **Manage**, then **Launch Tool**. Go to
 
 If you created a project with the Conversation service, you're all set with these prerequisites. Go to Step 1.
 
-1.  Go to the Watson Developer Console [![Services](readme_images/launch-glyph.svg)](https://console.bluemix.net/developer/watson/services){: new_window} page.
-1.  Select Conversation, click **Add Services**, and either sign up for a free {{site.data.keyword.Bluemix_notm}} account or log in.
+1.  Go to the Watson Developer Console [![Services](readme_images/launch-glyph.svg)](https://console.bluemix.net/developer/watson/services){:newtab} page.
+1.  Select Conversation, click **Add Services**, and either sign up for a free IBM Cloud account or log in.
 1.  Type `conversation-tutorial` as the project name and click **Create Project**.
 
 <!-- Remove this text after dedicated instances have the developer console: begin -->
@@ -29,7 +29,7 @@ Click **Launch Tool** for Conversation under **Services**.
 
 <!-- To do: Add screenshot for developer console -->
 
-If you're prompted to log into the tool, provide your {{site.data.keyword.Bluemix_notm}} credentials.
+If you're prompted to log into the tool, provide your IBM Cloud credentials.
 
 If you're not at a project details page for the Conversation service, go to the Watson Developer Console [Projects ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/developer/watson/projects) page and select the project.
 {: tip}
