@@ -1,6 +1,6 @@
 # Getting started tutorial
 
-##Learning objectives
+## Learning objectives
 
 By the time you finish the tutorial, you will understand how to:
 
