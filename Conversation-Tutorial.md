@@ -339,7 +339,39 @@ Now that you have built and tested your workspace, you can deploy it by connecti
 
 1. [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/team-wolfpack/conversation-simple&branch=master)
 
-1. Give the application a name,
+1. Give the application a name, choose the organization and region and click deploy. 
+     ![Deploy to IBM Cloud](readme_images/deploy-to-cloud.png)
 
+1. Click on Delivery Pipeline
+     ![Delivery Pipeline](readme_images/delivery-pipeline.png)
+          
+1. Watch the process of the Deploy Stage to see when the app is fully deployed.
+    ![Delivery Pipeline](readme_images/deployment-stages.png)
+    
+1. When the app is fully deployed, click on the hamburger menu for IBM Cloud and choose Cloud Foundry Apps to find the deployed app
 
+1. Click on the line with the app you just deployed. Note: don't click on the hyperlink, just click on the line. This will take you to the application overview page. 
 
+1. Click on the Runtime link on the left.
+
+1. On the runtime page, click on Environment Variables in the middle of the page.
+     ![Deploy to IBM Cloud](readme_images/runtime-overview.png)
+     
+1. In the Environment Variables, set the CONVERSATION_USERNAME and CONVERSATION_PASSWORD values to the values from the Credentials on the Conversation Service. To get these, do the following:
+      - Click on the IBM Cloud hamburger menu in the top left and choose Watson
+      - Click on the Conversation service you created earlier
+      - Click on the Service Credentials link on the left
+      - Under the Service Credentials Actions, choose to view credentials
+      - You will see the username and password in the json document
+      
+1. Set the WORKSPACE_ID to the workspace id in the Conversation tool. To get this, do the following:
+      - Click on the IBM Cloud hamburger menu in the top left and choose Watson
+      - Click on the Conversation service you created earlier
+      - Click on the Launch Tool button
+      - If needed, log in with your IBM ID
+      - Click on the More icon ![More options](readme_images/kabob.png) and choose View Details
+      - You can copy the Workspace ID and paste it into the WORKSPACE_ID field
+      
+1. Click Save which will force a re-deploy of the application. One the application is re-started, you can click on the `Visit App URL` link at the top. This will take you to the sample chatbot client.
+     ![Deploy to IBM Cloud](readme_images/sample-conversation.png)
+ 
