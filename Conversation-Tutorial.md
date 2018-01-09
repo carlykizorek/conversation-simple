@@ -155,40 +155,39 @@ Create entities that might occur in user input that has the #turn_on intent to r
 1.  Click the **Entities** tab to open the Entities page.
 1.  Click **Add entity**.
 1.  Add the `@appliance` entity name, and then press Enter. The `@appliance` entity represents an appliance in the car that a user might want to turn on.
-1.  Add the following entities to the **Value name** field:
+1.  Add the following entities:
 
-| Entity value |  Type   | Values                            |
-|--------------|---------|-----------------------------------|
-|radio         | Synonym | music tunes songs                 |
-
-    - value: radio 
-    The value represents a specific appliance that users might want to turn on.
-1.  Add other ways to specify the radio appliance entity in the **Synonyms** field. Press **Tab** to give the the field focus, and then enter the following synonyms. Press **Enter** after each synonym.
-
-    ```
-    music
-    tunes
-    ```
-    {: codeblock}
-
-1.  Click **Add value** to finish defining the `radio` value for the `@appliance` entity.
-1.  Add other types of appliances.
-
-    - Value: `headlights`. Synonym: `lights`.
-    - Value: `air conditioning`. Synonyms: `air` and `AC`.
+    | Entity value |  Type   | Values                              |
+    |--------------|---------|-------------------------------------|
+    | radio        | Synonym | music, tunes, songs                 |
+    | ac           | Synonym | air, air conditioner                |
+    | heater       | Synonym | heat                                |
+    | headlights   | Synonym | lights, headlamps                   |
 
 1.  Click the toggle to turn fuzzy matching **On** for the `@appliance` entity.
     This setting helps the service recognize references to entities in user input even when the entity is specified in a way that does not exactly match the syntax you use here.
-1.  Click the **Close** ![Close arrow](images/close_arrow.png) icon to finish adding the `@appliance` entity.
-1.  Repeat Steps 2-8 to create the @`genre` entity with fuzzy matching on, and these values and synonyms:
+1.  Click the **Close** ![Close arrow](readme_images/close-arrow.png) icon to finish adding the `@appliance` entity.
 
-    - Value: `classical`. Synonym: `symphonic`.
-    - Value: `rhythm and blues` Synonym: `r&b`.
-    - Value: `rock`. Synonym: `rock & roll`, `rock and roll`, and `pop`.
+    It should look like this:
+
+    ![Close arrow](readme_images/entity-appliance.png)
+
+1.  Repeat Steps 2-6 to create the `@genre` entity with fuzzy matching on, and these values and synonyms:
+
+    | Entity value |  Type   | Values                                |
+    |--------------|---------|---------------------------------------|
+    | classical    | Synonym | symphonic                             |
+    | jazz         | Synonym |                                       |
+    | pop          | Synonym | top 40                                |
+    | rock         | Synonym | rock & roll, rock and roll, hard rock |
+
+    It should look like this:
+
+    ![Close arrow](readme_images/entity-genre.png)
 
 You defined two entities: `@appliance` (representing an appliance the bot can turn on) and `@genre` (representing a genre of music the user can choose to listen to).
 
-When the user's input is received, the {{site.data.keyword.conversationshort}} service identifies both the intents and entities. You can now define a dialog that uses intents and entities to choose the correct response.
+When the user's input is received, the Conversation service identifies both the intents and entities. You can now define a dialog that uses intents and entities to choose the correct response.
 
 ## Step 7: Create a more complex dialog
 
@@ -224,9 +223,14 @@ Add nodes that address scenario 1, which is that the user wants to turn on the m
 1.  Click the More icon ![More options](readme_images/kabob.png) on the **#turn_on** node, and select **Add child node**.
 1.  In the condition field, enter `@appliance:radio`.
     This condition is true if the value of the @appliance entity is `radio` or one of its synonyms, as defined on the Entities tab.
-1.  In the response field, enter `What kind of music would you like to hear?`
+1.  In the response field, enter `What kind of music would you like to hear?` and add a second response of `What type of music do you want to hear?`
+1.  Set the variation to Random by clicking on the *Set to Random* link.
 1.  Name the node `Music`.
 1.  Click ![Close](readme_images/close-icon.png) to close the node edit view.
+
+Your dialog for Music should look like this:
+
+![Close](readme_images/dialog-music.png)
 
 ##### Add a jump from the #turn_on node to the Music node
 
@@ -235,13 +239,13 @@ Jump directly from the `#turn on` node to the `Music` node without asking for an
 1.  Click the More icon ![More options](readme_images/kabob.png) on the **#turn_on** node, and select **Jump to**.
 1.  Select the **Music** child node, and then select **If bot recognizes (condition)** to indicate that you want to process the condition of the Music node.
 
-![Jump to before](images/tut-dialog-jumpto.png)
+![Jump to before](readme_images/tut-dialog-jumpto.png)
 
 Note that you had to create the target node (the node to which you want to jump) before you added the **Jump to** action.
 
 After you create the Jump to relationship, you see a new entry in the tree:
 
-![Jump to after](images/tut-dialog-jump2.png)
+![Jump to after](readme_images/tut-dialog-jump2.png)
 
 ##### Add a child node that checks the music genre
 
@@ -265,14 +269,14 @@ That takes care of all the cases where the user asks to turn on the music.
 
 ##### Test the dialog for music
 
-1.  Select the ![Ask Watson](images/ask_watson.png) icon to open the chat pane.
+1.  Select the ![Ask Watson](readme_images/ask_watson.png) icon to open the chat pane.
 1.  Type `Play music`.
     The bot recognizes the #turn_on intent and the @appliance:music entity, and it responds by asking for a musical genre.
 
 1.  Type a valid @genre value (for example, `rock`).
     The bot recognizes the @genre entity and responds appropriately.
 
-    ![Shows a successful request to play music](images/tut-test-music.png)
+    ![Shows a successful request to play music](readme_images/tut-test-music.png)
 
 1.  Type `Play music` again, but this time specify an invalid response for the genre. The bot responds that it does not understand.
 
@@ -298,7 +302,7 @@ For the other values of @appliance, the bot doesn't need to ask for any more inp
 
     The bot recognizes the #turn_on intent and the @appliance:headlights entity, and it responds with `OK, turning on the headlights`.
 
-    ![Shows a successful request to turn on the lights](images/tut-test-lights.png)
+    ![Shows a successful request to turn on the lights](readme_images/tut-test-lights.png)
 
 1.  Type `turn on the air`.
 
@@ -321,17 +325,21 @@ Now add a peer node that is triggered if the user does not specify a valid appli
 
     If the bot fails to recognize the correct intent, you can retrain it directly from the chat window. Select the arrow next to the incorrect intent and choose the correct one from the list.
 
-    ![Shows choosing a different intent and retraining](images/tut-change-intent.gif)
+    ![Shows choosing a different intent and retraining](readme_images/tut-change-intent.gif)
 
 Optionally, you can review the **Car Dashboard - Sample** workspace to see this same use case fleshed out even more with a longer dialog and additional functionality.
 
-1.  Click the **Back to workspaces** button ![Shows Back to workspaces button in menu](images/workspaces-button.png) from the navigation menu.
+1.  Click the **Back to workspaces** button ![Shows Back to workspaces button in menu](readme_images/workspaces-button.png) from the navigation menu.
 
 1.  On the **Car Dashboard - Sample** tile, click **Edit sample**.
 
-## Next steps
-{: #deploy}
+## Step 8: Deploy a web app to use the conversation
 
-Now that you have built and tested your workspace, you can deploy it by connecting it to a user interface. There are several ways you can do this.
+Now that you have built and tested your workspace, you can deploy it by connecting it to a user interface. Cick the link below.
+
+1. [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/team-wolfpack/conversation-simple&branch=master)
+
+1. Give the application a name,
+
 
 
