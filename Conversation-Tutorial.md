@@ -1,61 +1,49 @@
 # Getting started tutorial
 
-In this short tutorial, we introduce the Conversation tool and go through the process of creating your first conversation.
+##Learning objectives
 
-## Before you begin
+By the time you finish the tutorial, you will understand how to:
 
-You'll need a service instance to start.
+- Define entities
+- Plan a dialog
+- Use node and response conditions in a dialog
 
-You created your service instance. Click **Manage**, then **Launch Tool**. Go to Step 2.
+## Duration
+This tutorial will take approximately 2 to 3 hours to complete.
 
-If you created a project with the Conversation service, you're all set with these prerequisites. Go to Step 1.
+## Create the Watson Conversation Service instance
 
-1.  Go to the Watson Developer Console [![Services](readme_images/launch-glyph.svg)](https://console.bluemix.net/developer/watson/services){:newtab} page.
-1.  Select Conversation, click **Add Services**, and either sign up for a free IBM Cloud account or log in.
+1.  Go to the Watson Developer Console [![Services](readme_images/launch-glyph.svg)](https://console.bluemix.net/developer/watson/services) page.
+1.  Select **Conversation**, click **Add Services**, and either sign up for a free **IBM Cloud Lite** account or log in if you have an existing account.
 1.  Type `conversation-tutorial` as the project name and click **Create Project**.
 
-<!-- Remove this text after dedicated instances have the developer console: begin -->
-
-If you use {{site.data.keyword.Bluemix_dedicated_notm}}, create your service instance from the [Conversation ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/catalog/services/conversation/){: new_window} page in the Catalog.
-
-<!-- Remove this text after dedicated instances have the developer console: end -->
-
 ## Step 1: Launch the tool
-{: #launch-tool}
 
 After you create a project that includes the Conversation service, you'll land on the project details page. Launch the  Conversation tool from here.
 
+![The project landing page and the launch icon.](readme_images/project-landing.png)
+
 Click **Launch Tool** for Conversation under **Services**.
 
-<!-- To do: Add screenshot for developer console -->
+If you're prompted to log into the tool, provide your **IBM Cloud** credentials.
 
-If you're prompted to log into the tool, provide your IBM Cloud credentials.
-
-If you're not at a project details page for the Conversation service, go to the Watson Developer Console [Projects ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/developer/watson/projects) page and select the project.
-{: tip}
-
-<!-- Remove this text after dedicated instances have the developer console: begin -->
-
-{{site.data.keyword.Bluemix_dedicated_notm}}: Select your service instance from the Dashboard to launch the tooling.
-
-<!-- Remove this text after dedicated instances have the Developer Console: end -->
+If you're not at a project details page for the Conversation service, go to the Watson Developer Console [![Projects](readme_images/launch-glyph.svg)](https://console.bluemix.net/developer/watson/projects) page and select the project.
 
 ## Step 2: Create a workspace
-{: #create-workspace}
 
 Your first step in the Conversation tool is to create a workspace.
 
-A [*workspace*](configure-workspace.html) is a container for the artifacts that define the conversation flow.
+A **workspace** is a container for the artifacts that define the conversation flow.
+
+![Create a workspace](readme_images/create-workspace.png)
 
 1.  In the Conversation tool, click **Create**.
 1.  Give your workspace the name `Conversation tutorial`. If the dialog you plan to build will use a language other than English, then choose the appropriate language from the list. Click **Create**. Youʼll land on the **Intents** tab of your new workspace.
 
-![Shows an animation of a user creating a Conversation tutorial workspace.](images/gs-create-workspace-animated.gif)
+![Intents landing page](readme_images/intents-landing.png)
 
 ## Step 3: Create intents
-{: #create-intents}
-
-An [intent](intents.html) represents the purpose of a user's input. You can think of intents as the actions your users might want to perform with your application.
+An **intent** represents the purpose of a user's input. You can think of intents as the actions your users might want to perform with your application.
 
 For this example, we're going to keep things simple and define only two intents: one for saying hello, and one for saying goodbye.
 
@@ -71,7 +59,7 @@ For this example, we're going to keep things simple and define only two intents:
     - `hi`
     - `howdy`
 
-1.  Click the **Close** ![Close arrow](images/close_arrow.png) icon to finish creating the #hello intent.
+1.  Click the **Close** ![Close arrow](readme_images/close-arrow.png) icon to finish creating the #hello intent.
 1.  Create another intent named #goodbye with these five examples:
     - `bye`
     - `farewell`
@@ -81,28 +69,29 @@ For this example, we're going to keep things simple and define only two intents:
 
 You've created two intents, #hello and #goodbye, and provided example user input to train Watson to recognize these intents in your users' input.
 
-![Shows Intents page listing the #goodbye and #hello intents](images/gs-add-intents-result.png)
+![Shows Intents page listing the #goodbye and #hello intents](readme_images/intents-listing.png)
 
 ## Step 4: Build a dialog
-{: #build-dialog}
 
-A [dialog](dialog-build.html) defines the flow of your conversation in the form of a logic tree. Each node of the tree has a condition that triggers it, based on user input.
+A **dialog** defines the flow of your conversation in the form of a logic tree. Each node of the tree has a condition that triggers it, based on user input.
 
 We'll create a simple dialog that handles our #hello and #goodbye intents, each with a single node.
 
 ### Adding a start node
 
+![Create Dialog](readme_images/create-dialog.gif)
+
 1.  In the Conversation tool, click the **Dialog** tab.
 1.  Click **Create**. You'll see two nodes:
     - **Welcome**: Contains a greeting that is displayed to your users when they first engage with the bot.
     - **Anything else**: Contains phrases that are used to reply to users when their input is not recognized.
-
-    ![Shows the dialog tree with the Welcome and Anything else nodes](images/gs-add-dialog-node-animated-cover.png)
+	![Shows the dialog tree with the Welcome and Anything else nodes](readme_images/basic-dialog.png)
+	
 1.  Click the **Welcome** node to open it in the edit view.
 1.  Replace the default response with the text, `Welcome to the Conversation tutorial!`.
 
-    ![Shows the Welcome node open in edit view](images/gs-edit-welcome-node.png)
-1.  Click ![Close](images/close.png) to close the edit view.
+    ![Shows the Welcome node open in edit view](readme_images/gs-edit-welcome-node.png)
+1.  Click ![Close](readme_images/close-icon.png) to close the edit view.
 
 You created a dialog node that is triggered by the `welcome` condition, which is a special condition that indicates that the user has started a new conversation. Your node specifies that when a new conversation starts, the system should respond with the welcome message.
 
@@ -110,29 +99,28 @@ You created a dialog node that is triggered by the `welcome` condition, which is
 
 You can test your dialog at any time to verify the dialog. Let's test it now.
 
-- Click the ![Ask Watson](images/ask_watson.png) icon to open the *Try it out* pane. You should see your welcome message.
-
-    ![Testing the dialog node](images/gs-tryitout-welcome-node.png)
+- Click the ![Ask Watson](readme_images/ask_watson.png) icon to open the *Try it out* pane. You should see your welcome message.
+  ![Testing the dialog node](readme_images/gs-tryitout-welcome-node.png)
+- Click ![Close](readme_images/close-icon.png) to close the *Try it out* view.
 
 ### Adding nodes to handle intents
 
 Now let's add nodes to handle our intents between the `Welcome` node and the `Anything else` node.
 
-1.  Click the More icon ![More options](images/kabob.png) on the **Welcome** node, and then select **Add node below**.
-1.  Type `#hello` in the **Enter a condition** field of this node. Then select the **#hello** option.
+1.  Click the More icon ![More options](readme_images/kabob.png) on the **Welcome** node, and then select **Add node below**.
+1.  Give the node a name and type `#hello` in the **Enter a condition** field of this node. Then select the **#hello** option.
 1.  Add the response, `Good day to you.`
-1.  Click ![Close](images/close.png) to close the edit view.
+1.  Click ![Close](readme_images/close-icon.png) to close the edit view.
+1.  Click the More icon ![More options](readme_images/kabob.png) on this node, and then select **Add node below** to create a peer node. In the peer node, specify `#goodbye` as the condition, and `OK. See you later!` as the response.
+1.  Click ![Close](readme_images/close-icon.png) to close the edit view.
 
-   ![Shows an animation of a user adding a hello node to the dialog.](images/gs-add-dialog-node-animated.gif)
-1.  Click the More icon ![More options](images/kabob.png) on this node, and then select **Add node below** to create a peer node. In the peer node, specify `#goodbye` as the condition, and `OK. See you later!` as the response.
-
-    ![Adding nodes for intents](images/gs-add-dialog-nodes-result.png)
+    ![Adding nodes for intents](readme_images/gs-add-dialog-nodes-result.png)
 
 ### Testing intent recognition
 
 You  built a simple dialog to recognize and respond to both hello and goodbye inputs. Let's see how well it works.
 
-1.  Click the ![Ask Watson](images/ask_watson.png) icon to open the *Try it out* pane. There's that reassuring welcome message.
+1.  Click the ![Ask Watson](readme_images/ask_watson.png) icon to open the *Try it out* pane. There's that reassuring welcome message.
 1.  At the bottom of the pane, type `Hello` and press Enter. The output indicates that the #hello intent was recognized, and the appropriate response (`Good day to you.`) appears.
 1.  Try the following input:
     - `bye`
@@ -141,30 +129,209 @@ You  built a simple dialog to recognize and respond to both hello and goodbye in
     - `good morning`
     - `sayonara`
 
-   ![Shows an animation of the user testing the dialog in the Try it out pane.](images/gs-test-dialog-animated.gif)
-
 Watson can recognize your intents even when your input doesn't exactly match the examples you included. The dialog uses intents to identify the purpose of the user's input regardless of the precise wording used, and then responds in the way you specify.
 
-### Result of building a dialog
+## Step 5: Add more advanced intents and examples
 
-That's it. You created a simple conversation with two intents and a dialog to recognize them.
+1.  Go back to the Intents page and click **Add intent**.
+1.  Add the following intent name, and then click **Create intent**. Create the intent `#turn_on`. The `#turn_on` intent indicates that the user wants to turn on an appliance such as the radio, windshield wipers, or headlights.
+1.  In the **Add user example** field, type the following utterance, and then click **Add example**. Enter the following examples:
+    - I need
+    - Play
+    - Play some
+    - Start
+    - turn on
+    - Crank up
+1.  Click the **Close** ![Close arrow](readme_images/close-arrow.png) icon to finish adding the `#turn_on` intent.
 
-## Step 5: Review the sample workspace
-{: #review-sample-workspace}
+You now have three intents, the `#turn_on` intent that you just added, and the `#hello` and `#goodbye`. Each intent has a set of example utterances that help train Watson to recognize the intents in user input.
 
-Open the sample workspace to see intents similar to the ones you just created plus many more, and see how they are used in a complex dialog.
+## Step 6: Add entities
 
-1.  Go back to the Workspaces page.
-   You can click the ![Back to workspaces button](images/workspaces-button.png) button from the navigation menu.
-1.  On the **Car Dashboard - Sample** workspace tile, click the **Edit sample** button.
+An **entity** definition includes a set of entity *values* that can be used to trigger different responses. Each entity value can have multiple *synonyms*, which define different ways that the same value might be specified in user input.
 
-    ![Shows the car dashboard sample tile on the Workspaces page](images/gs-workspace-car-sample.png)
+Create entities that might occur in user input that has the #turn_on intent to represent what the user wants to turn on.
+
+1.  Click the **Entities** tab to open the Entities page.
+1.  Click **Add entity**.
+1.  Add the `@appliance` entity name, and then press Enter. The `@appliance` entity represents an appliance in the car that a user might want to turn on.
+1.  Add the following entities to the **Value name** field:
+
+| Entity value |  Type   | Values                            |
+|--------------|---------|-----------------------------------|
+|radio         | Synonym | music tunes songs                 |
+
+    - value: radio 
+    The value represents a specific appliance that users might want to turn on.
+1.  Add other ways to specify the radio appliance entity in the **Synonyms** field. Press **Tab** to give the the field focus, and then enter the following synonyms. Press **Enter** after each synonym.
+
+    ```
+    music
+    tunes
+    ```
+    {: codeblock}
+
+1.  Click **Add value** to finish defining the `radio` value for the `@appliance` entity.
+1.  Add other types of appliances.
+
+    - Value: `headlights`. Synonym: `lights`.
+    - Value: `air conditioning`. Synonyms: `air` and `AC`.
+
+1.  Click the toggle to turn fuzzy matching **On** for the `@appliance` entity.
+    This setting helps the service recognize references to entities in user input even when the entity is specified in a way that does not exactly match the syntax you use here.
+1.  Click the **Close** ![Close arrow](images/close_arrow.png) icon to finish adding the `@appliance` entity.
+1.  Repeat Steps 2-8 to create the @`genre` entity with fuzzy matching on, and these values and synonyms:
+
+    - Value: `classical`. Synonym: `symphonic`.
+    - Value: `rhythm and blues` Synonym: `r&b`.
+    - Value: `rock`. Synonym: `rock & roll`, `rock and roll`, and `pop`.
+
+You defined two entities: `@appliance` (representing an appliance the bot can turn on) and `@genre` (representing a genre of music the user can choose to listen to).
+
+When the user's input is received, the {{site.data.keyword.conversationshort}} service identifies both the intents and entities. You can now define a dialog that uses intents and entities to choose the correct response.
+
+## Step 7: Create a more complex dialog
+
+In this complex dialog, you will create dialog branches that handle the #turn_on intent you defined earlier.
+
+### Add a base node for #turn_on
+Create a dialog branch to respond to the #turn_on intent. Start by creating the base node:
+
+1.  Click the More icon ![More options](readme_images/kabob.png) on the **#hello** node, and then select **Add node below**.
+1.  Start typing `#turn_on` in the condition field, and then select it from the list.
+    This condition is triggered by any input that matches the #turn_on intent.
+1.  Do not enter a response in this node. Click ![Close](readme_images/close-icon.png) to close the node edit view.
+
+### Scenarios
+The dialog needs to determine which appliance the user wants to turn on. To handle this, create multiple responses based on additional conditions.
+
+There are three possible scenarios, based on the intents and entities that you defined:
+
+- **Scenario 1**: The user wants to turn on the music, in which case the bot must ask for the genre.
+
+- **Scenario 2**: The user wants to turn on any other valid appliance, in which case the bot echos the name of the requested appliance in a message that indicates it is being turned on.
+
+- **Scenario 3**: The user does not specify a recognizable appliance name, in which case the bot must ask for clarification.
+
+Add nodes that check these scenario conditions in this order so the dialog evaluates the most specific condition first.
+
+#### Address Scenario 1
+
+Add nodes that address scenario 1, which is that the user wants to turn on the music. In response, the bot must ask for the music genre.
+
+##### Add a child node that checks whether the appliance type is music
+
+1.  Click the More icon ![More options](readme_images/kabob.png) on the **#turn_on** node, and select **Add child node**.
+1.  In the condition field, enter `@appliance:radio`.
+    This condition is true if the value of the @appliance entity is `radio` or one of its synonyms, as defined on the Entities tab.
+1.  In the response field, enter `What kind of music would you like to hear?`
+1.  Name the node `Music`.
+1.  Click ![Close](readme_images/close-icon.png) to close the node edit view.
+
+##### Add a jump from the #turn_on node to the Music node
+
+Jump directly from the `#turn on` node to the `Music` node without asking for any more user input. To do this, you can use a **Jump to** action.
+
+1.  Click the More icon ![More options](readme_images/kabob.png) on the **#turn_on** node, and select **Jump to**.
+1.  Select the **Music** child node, and then select **If bot recognizes (condition)** to indicate that you want to process the condition of the Music node.
+
+![Jump to before](images/tut-dialog-jumpto.png)
+
+Note that you had to create the target node (the node to which you want to jump) before you added the **Jump to** action.
+
+After you create the Jump to relationship, you see a new entry in the tree:
+
+![Jump to after](images/tut-dialog-jump2.png)
+
+##### Add a child node that checks the music genre
+
+Now add a node to process the type of music that the user requests.
+
+1.  Click the More icon ![More options](readme_images/kabob.png) on the **Music** node, and select **Add child node**.
+    This child node is evaluated only after the user has responded to the question about the type of music they want to hear. Because we need a user input before this node, there is no need to use a **Jump to** action.
+1.  Add `@genre` to the condition field.  This condition is true whenever a valid value for the @genre entity is detected.
+1.  Enter `OK! Playing @genre.` as the response. This response reiterates the genre value that the user provides.
+
+##### Add a node that handles unrecognized genre types in user responses
+
+Add a node to respond when the user does not specify a recognized value for @genre.
+
+1.  Click the More icon ![More options](readme_images/kabob.png) on the *@genre* node, and select **Add node below** to create a peer node.
+1.  Enter `true` in the condition field.
+    The true condition is a special condition. It specifies that if the dialog flow reaches this node, it should always evaluate as true. (If the user specifies a valid @genre value, this node will never be reached.)
+1.  Enter `I'm sorry, I don't understand. I can play classical, rhythm and blues, or rock music.` as the response.
+
+That takes care of all the cases where the user asks to turn on the music.
+
+##### Test the dialog for music
+
+1.  Select the ![Ask Watson](images/ask_watson.png) icon to open the chat pane.
+1.  Type `Play music`.
+    The bot recognizes the #turn_on intent and the @appliance:music entity, and it responds by asking for a musical genre.
+
+1.  Type a valid @genre value (for example, `rock`).
+    The bot recognizes the @genre entity and responds appropriately.
+
+    ![Shows a successful request to play music](images/tut-test-music.png)
+
+1.  Type `Play music` again, but this time specify an invalid response for the genre. The bot responds that it does not understand.
+
+#### Address Scenario 2
+
+We will add nodes that address scenario 2, which is that the user wants to turn on another valid appliance. In this case, the bot echos the name of the requested appliance in a message that indicates it is being turned on.
+
+##### Add a child node that checks for any appliance
+
+Add a node that is triggered when any other valid value for @appliance is provided by the user.
+For the other values of @appliance, the bot doesn't need to ask for any more input. It just returns a positive response.
+
+1.  Click the More icon ![More options](readme_images/kabob.png) on the **Music** node, and then select **Add node below** to create a peer node that is evaluated after the @appliance:music condition is evaluated.
+1.  Enter `@appliance` as the node condition.
+    This condition is triggered if the user input includes any recognized value for the @appliance entity besides music.
+1.  Enter `OK! Turning on the @appliance.` as the response.
+    This response reiterates the appliance value that the user provided.
+
+##### Test the dialog with other appliances
+
+1.  Select the ![Ask Watson](readme_images/ask_watson.png) icon to open the chat pane.
+1.  Type `lights on`.
+
+    The bot recognizes the #turn_on intent and the @appliance:headlights entity, and it responds with `OK, turning on the headlights`.
+
+    ![Shows a successful request to turn on the lights](images/tut-test-lights.png)
+
+1.  Type `turn on the air`.
+
+    The bot recognizes the #turn_on intent and the @appliance:(air conditioning) entity, and it responds with `OK, turning on the air conditioning.`
+
+1.  Try variations on all of the supported commands based on the example utterances and entity synonyms you defined.
+
+#### Address Scenario 3
+
+Now add a peer node that is triggered if the user does not specify a valid appliance type.
+
+1.  Click the More icon ![More options](readme_images/kabob.png) on the **@appliance** node, and then select **Add node below** to create a peer node that is evaluated after the @appliance condition is evaluated.
+1.  Enter `true` in the condition field.
+    (If the user specifies a valid @appliance value, this node will never be reached.)
+1.  Enter `I'm sorry, I'm not sure I understood you. I can turn on music, headlights, or air conditioning.` as the response.
+
+##### Test some more
+
+1.  Try more utterance variations to test the dialog.
+
+    If the bot fails to recognize the correct intent, you can retrain it directly from the chat window. Select the arrow next to the incorrect intent and choose the correct one from the list.
+
+    ![Shows choosing a different intent and retraining](images/tut-change-intent.gif)
+
+Optionally, you can review the **Car Dashboard - Sample** workspace to see this same use case fleshed out even more with a longer dialog and additional functionality.
+
+1.  Click the **Back to workspaces** button ![Shows Back to workspaces button in menu](images/workspaces-button.png) from the navigation menu.
+
+1.  On the **Car Dashboard - Sample** tile, click **Edit sample**.
 
 ## Next steps
-{: #next-steps}
+{: #deploy}
 
-This tutorial is built around a simple example. For a real application, you'll need to define some more interesting intents, some entities, and a more complex dialog.
+Now that you have built and tested your workspace, you can deploy it by connecting it to a user interface. There are several ways you can do this.
 
-- Try the advanced [tutorial](tutorial.html) to add entities and clarify a user's purpose.
-- [Deploy](deploy.html) your workspace by connecting it to a front-end user interface, social media, or a messaging channel.
-- Check out the [sample apps](sample-applications.html).
+
