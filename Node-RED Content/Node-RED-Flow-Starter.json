@@ -1,116 +1,132 @@
 [
-    {
-        "id": "5207b854.ffcd88",
-        "type": "tab",
-        "label": "Chatbot",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "eba23b12.8d9298",
-        "type": "http in",
-        "z": "5207b854.ffcd88",
-        "name": "ChatBot Web Page",
-        "url": "/bot",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 306.5,
-        "y": 154,
-        "wires": [
-            [
-                "851e6d48.4f0438"
-            ]
-        ]
-    },
-    {
-        "id": "3ce39fa1.15cc6",
-        "type": "http response",
-        "z": "5207b854.ffcd88",
-        "name": "Return ChatBot Web Page",
-        "statusCode": "",
-        "headers": {
-            "content-type": "text/html"
-        },
-        "x": 880.5,
-        "y": 159,
-        "wires": []
-    },
-    {
-        "id": "851e6d48.4f0438",
-        "type": "template",
-        "z": "5207b854.ffcd88",
-        "name": "ChatBot HTML",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>\n\t  My BOT\n\t</title>\n\t<link href=\"https://1.www.s81c.com/common/v18/css/www.css\" rel=\"stylesheet\">\n\t<link href=\"https://1.www.s81c.com/common/v18/css/syntaxhighlighter.css\" rel=\"stylesheet\">\n    <link href=\"https://1.www.s81c.com/common/v18/css/grid-fluid.css\" rel=\"stylesheet\"> \n\t<link rel=\"stylesheet\"\n        type=\"text/css\"\n        href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" />\n<script>\n  IBMCore.common.util.config.set({\n      masthead: {\n          type: \"popup\"\n     }\n  });\n</script>\n  </head>\n  <body >\n<div id=\"ibm-masthead\" role=\"banner\" aria-label=\"IBM\" class=\"ibm-mhtype-minimal\">\n\t\t\t\t<div id=\"ibm-universal-nav\" class=\"\">\t\t\n\t\t\t\t\t<nav role=\"navigation\" aria-label=\"IBM\">\n\t\t\t\t\t\t<div id=\"ibm-home\"><a href=\"http://www.ibm.com/us/en/?lnk=m\">IBM®</a></div>\n\t\t\t\t\t\t<ul id=\"ibm-menu-links\" role=\"toolbar\" aria-label=\"Site map\" class=\"ibm-hide\">\n\t\t\t\t\t\t\t<li><a href=\"http://www.ibm.com/sitemap/us/en/\">Site map</a></li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t<div><img src=\"https://avatars.io/twitter/ibmwolfpack\" style=\"height:31px;width:31px;position:absolute;right:10px;top: 10px;\"/></div>\n\t\t\t\t\t</nav>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t</div>\n    <div class=\"jumbotron\">\n        <h1>Watson Conversation with Node-RED</h1>\n        <p>This is a sample ChatBot client written with Node-RED using your Watson Conversation you created earlier.</p>\n    </div>\n\t<div class=\"container\" style='width: 35%'>\n      <div id=\"no-script\"class=\"bg-info\">\n        This application needs JavaScript enabled in your browser!\n      </div>\n      <div id=\"id_contextdump\"></div>\n      \n      <p class=\"lead\">\n          <div id=\"id_botchathistory\" class=\"clearfix\" style=\"height: 300px; overflow: scroll;background-color: #eeeeee; border-radius: 10px;\">\n    \t  </div>\n\t  </p>\n\n\t  <div>\n\t      <form method=\"POST\" action=\"javascript:onChatClick();\">\n              <div class=\"form-group\" style=\"width: 100px;\">\n                <label for=\"id_chattext\">Your message: </label>\n                <input type=\"text\" name=\"chattext\" id=\"id_chattext\" class=\"form-control\" style=\"width: 200px;\">\n              </div>\n\t      </form>\n\t        <button class=\"btn btn-default\" onclick=\"javascript:onChatClick()\">Send</button>\n\t        <br/><br/>\n\t  </div>\n    </div>\n    <script type=\"text/javascript\" src=\"https://code.jquery.com/jquery-2.1.4.min.js\"></script>\n    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>\n\n    <script type=\"text/javascript\">\n\n      $(document).ready(function() {\n          javascriptCheck();\n          \t$('#id_contextdump').hide();\n      });\n\n      // if javascript is enabled on the browser then can\n      // remove the warning message\n      function javascriptCheck() {\n        $('#no-script').remove();\n      }\n\n      function createNewDiv(who, message) {\n        var txt = message;\n        var alignmentClass;\n        if (who === 'You') {\n            alignmentClass = 'text-right pull-right !important bg-primary';\n        } else {\n            alignmentClass = 'text-left pull-left !important bg-success';\n        }\n        return $('<div class=\"chatText ' + alignmentClass + '\" style=\"font-size: 10pt;padding: 5px; border: 5px solid #eeeeee; border-radius: 10px;\"></div><br/><br/>').text(txt);\n      }\n\n      function chat(person, txt) {\n        $('#id_botchathistory').append(createNewDiv(person, txt));\n        $('#id_botchathistory').scrollTop($('#id_botchathistory')[0].scrollHeight);\n      }    \n\n      function processOK(response) {\n        chat('Bot', response.botresponse.messageout.output.text);\n        $('#id_contextdump').data('convContext', response.botresponse.messageout.context);\n        $('#id_chattext').val('');\n        $('#id_chattext').focus();\n      }\n\n      function processNotOK() {\n        chat('Error', 'Error whilst attempting to talk to Bot');\n      }\n\n      function invokeAjax(message) {\n        var contextdata = $('#id_contextdump').data('convContext');\n\n\n        //var ajaxData = \"msgdata=\" + message;\n        var ajaxData = {};\n        ajaxData.msgdata = message;\n        if (contextdata) {\n          ajaxData.context = contextdata;    \n        }\n\n        $.ajax({\n          type: 'POST',\n          url: 'botchat',\n          data: ajaxData,\n          success: processOK,\n          error: processNotOK\n        });\n      }\n\n      // User has entered some text.\n      function onChatClick() {\n        var txt = $('#id_chattext').val();\n        chat('You', txt);\n        invokeAjax(txt);\n      }\n\n    </script>\n  </body>\n</html>",
-        "output": "str",
-        "x": 585.5,
-        "y": 161,
-        "wires": [
-            [
-                "3ce39fa1.15cc6"
-            ]
-        ]
-    },
-    {
-        "id": "883d1d92.9406",
-        "type": "http in",
-        "z": "5207b854.ffcd88",
-        "name": "ChatBot RESTful API",
-        "url": "/botchat",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 250.5,
-        "y": 295,
-        "wires": [
-            [
-                "81648abc.7717c"
-            ]
-        ]
-    },
-    {
-        "id": "8a8cda75.91c298",
-        "type": "http response",
-        "z": "5207b854.ffcd88",
-        "name": "ChatBot RESTful API Response",
-        "statusCode": "",
-        "headers": {},
-        "x": 949.5,
-        "y": 282,
-        "wires": []
-    },
-    {
-        "id": "81648abc.7717c",
-        "type": "function",
-        "z": "5207b854.ffcd88",
-        "name": "Pre-Process Payload",
-        "func": "// stash away incoming data\nmsg.mydata = {};\nmsg.mydata.messagein = msg.req.body.msgdata;\nmsg.payload = msg.mydata.messagein;\n\nmsg.params = { \"context\": msg.req.body.context};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 453.5,
-        "y": 360,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e0a6e521.a19248",
-        "type": "function",
-        "z": "5207b854.ffcd88",
-        "name": "Post-Process Payload",
-        "func": "msg.mydata.messageout = msg.payload;\n\nmsg.payload = {};\nmsg.payload.botresponse = msg.mydata;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 745.5,
-        "y": 350,
-        "wires": [
-            [
-                "8a8cda75.91c298"
-            ]
-        ]
-    }
-]
+		{
+			"id" : "3c145c24.dda594",
+			"type" : "tab",
+			"label" : "Chatbot",
+			"disabled" : false,
+			"info" : ""
+		},
+		{
+			"id" : "34ae7307.6f5844",
+			"type" : "http in",
+			"z" : "3c145c24.dda594",
+			"name" : "ChatBot Web Page",
+			"url" : "/bot",
+			"method" : "get",
+			"upload" : false,
+			"swaggerDoc" : "",
+			"x" : 306.5,
+			"y" : 154,
+			"wires" : [ [ "a938e529.a97b9" ] ]
+		},
+		{
+			"id" : "592072fd.25ef7c",
+			"type" : "http response",
+			"z" : "3c145c24.dda594",
+			"name" : "Return ChatBot Web Page",
+			"statusCode" : "",
+			"headers" : {
+				"content-type" : "text/html"
+			},
+			"x" : 880.5,
+			"y" : 159,
+			"wires" : []
+		},
+		{
+			"id" : "a938e529.a97b9",
+			"type" : "template",
+			"z" : "3c145c24.dda594",
+			"name" : "ChatBot HTML",
+			"field" : "payload",
+			"fieldType" : "msg",
+			"format" : "handlebars",
+			"syntax" : "mustache",
+			"template" : "<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>\n\t  My BOT\n\t</title>\n\t<link href=\"https://1.www.s81c.com/common/v18/css/www.css\" rel=\"stylesheet\">\n\t<link href=\"https://1.www.s81c.com/common/v18/css/syntaxhighlighter.css\" rel=\"stylesheet\">\n    <link href=\"https://1.www.s81c.com/common/v18/css/grid-fluid.css\" rel=\"stylesheet\"> \n\t<link rel=\"stylesheet\"\n        type=\"text/css\"\n        href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\" />\n<script>\n  IBMCore.common.util.config.set({\n      masthead: {\n          type: \"popup\"\n     }\n  });\n</script>\n  </head>\n  <body >\n<div id=\"ibm-masthead\" role=\"banner\" aria-label=\"IBM\" class=\"ibm-mhtype-minimal\">\n\t\t\t\t<div id=\"ibm-universal-nav\" class=\"\">\t\t\n\t\t\t\t\t<nav role=\"navigation\" aria-label=\"IBM\">\n\t\t\t\t\t\t<div id=\"ibm-home\"><a href=\"http://www.ibm.com/us/en/?lnk=m\">IBM®</a></div>\n\t\t\t\t\t\t<ul id=\"ibm-menu-links\" role=\"toolbar\" aria-label=\"Site map\" class=\"ibm-hide\">\n\t\t\t\t\t\t\t<li><a href=\"http://www.ibm.com/sitemap/us/en/\">Site map</a></li>\n\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t<div><img src=\"https://avatars.io/twitter/ibmwolfpack\" style=\"height:31px;width:31px;position:absolute;right:10px;top: 10px;\"/></div>\n\t\t\t\t\t</nav>\n\t\t\t\t\t\n\t\t\t\t</div>\n\t\t\t</div>\n    <div class=\"jumbotron\">\n        <h1>Watson Conversation with Node-RED</h1>\n        <p>This is a sample ChatBot client written with Node-RED using your Watson Conversation you created earlier.</p>\n    </div>\n\t<div class=\"container\" style='width: 35%'>\n      <div id=\"no-script\"class=\"bg-info\">\n        This application needs JavaScript enabled in your browser!\n      </div>\n      <div id=\"id_contextdump\"></div>\n      \n      <p class=\"lead\">\n          <div id=\"id_botchathistory\" class=\"clearfix\" style=\"height: 300px; overflow: scroll;background-color: #eeeeee; border-radius: 10px;\">\n    \t  </div>\n\t  </p>\n\n\t  <div>\n\t      <form method=\"POST\" action=\"javascript:onChatClick();\">\n              <div class=\"form-group\" style=\"width: 100px;\">\n                <label for=\"id_chattext\">Your message: </label>\n                <input type=\"text\" name=\"chattext\" id=\"id_chattext\" class=\"form-control\" style=\"width: 200px;\">\n              </div>\n\t      </form>\n\t        <button class=\"btn btn-default\" onclick=\"javascript:onChatClick()\">Send</button>\n\t        <br/><br/>\n\t  </div>\n    </div>\n    <script type=\"text/javascript\" src=\"https://code.jquery.com/jquery-2.1.4.min.js\"></script>\n    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js\"></script>\n\n    <script type=\"text/javascript\">\n\n      $(document).ready(function() {\n          javascriptCheck();\n          \t$('#id_contextdump').hide();\n          \tstartAjax();\n      });\n\n      // if javascript is enabled on the browser then can\n      // remove the warning message\n      function javascriptCheck() {\n        $('#no-script').remove();\n      }\n\n      function createNewDiv(who, message) {\n        var txt = message;\n        var alignmentClass;\n        if (who === 'You') {\n            alignmentClass = 'text-right pull-right !important bg-primary';\n        } else {\n            alignmentClass = 'text-left pull-left !important bg-success';\n        }\n        return $('<div class=\"chatText ' + alignmentClass + '\" style=\"font-size: 10pt;padding: 5px; border: 5px solid #eeeeee; border-radius: 10px;\"></div><br/><br/>').text(txt);\n      }\n\n      function chat(person, txt) {\n        $('#id_botchathistory').append(createNewDiv(person, txt));\n        $('#id_botchathistory').scrollTop($('#id_botchathistory')[0].scrollHeight);\n      }    \n\n      function processOK(response) {\n        chat('Bot', response.botresponse.messageout.output.text);\n        $('#id_contextdump').data('convContext', response.botresponse.messageout.context);\n        $('#id_chattext').val('');\n        $('#id_chattext').focus();\n      }\n\n      function processNotOK() {\n        chat('Error', 'Error whilst attempting to talk to Bot');\n      }\n\n      function invokeAjax(message) {\n        var contextdata = $('#id_contextdump').data('convContext');\n\n\n        //var ajaxData = \"msgdata=\" + message;\n        var ajaxData = {};\n        ajaxData.msgdata = message;\n        if (contextdata) {\n          ajaxData.context = contextdata;    \n        }\n\n        $.ajax({\n          type: 'POST',\n          url: 'botchat',\n          data: ajaxData,\n          success: processOK,\n          error: processNotOK\n        });\n      }\n      \n      function startAjax() {\n        \n        var ajaxData = {};\n        \n        $.ajax({\n          type: 'GET',\n          url: 'botchat',\n          data: ajaxData,\n          success: processOK,\n          error: processNotOK\n        });\n      }\n\n      // User has entered some text.\n      function onChatClick() {\n        var txt = $('#id_chattext').val();\n        chat('You', txt);\n        invokeAjax(txt);\n      }\n\n    </script>\n  </body>\n</html>",
+			"output" : "str",
+			"x" : 585.5,
+			"y" : 161,
+			"wires" : [ [ "592072fd.25ef7c" ] ]
+		},
+		{
+			"id" : "cd18dec2.d3508",
+			"type" : "http in",
+			"z" : "3c145c24.dda594",
+			"name" : "ChatBot RESTful API - subsequent requests",
+			"url" : "/botchat",
+			"method" : "post",
+			"upload" : false,
+			"swaggerDoc" : "",
+			"x" : 190,
+			"y" : 280,
+			"wires" : [ [ "fc9fb56f.2c2c88" ] ]
+		},
+		{
+			"id" : "acaf942b.aa5278",
+			"type" : "http response",
+			"z" : "3c145c24.dda594",
+			"name" : "ChatBot RESTful API Response",
+			"statusCode" : "",
+			"headers" : {},
+			"x" : 949.5,
+			"y" : 282,
+			"wires" : []
+		},
+		{
+			"id" : "fc9fb56f.2c2c88",
+			"type" : "function",
+			"z" : "3c145c24.dda594",
+			"name" : "Pre-Process Payload",
+			"func" : "// stash away incoming data\nmsg.mydata = {};\nmsg.mydata.messagein = msg.req.body.msgdata;\nmsg.payload = msg.mydata.messagein;\n\nmsg.params = { \"context\": msg.req.body.context};\n\nreturn msg;",
+			"outputs" : 1,
+			"noerr" : 0,
+			"x" : 453.5,
+			"y" : 360,
+			"wires" : [ [] ]
+		},
+		{
+			"id" : "35bad216.fd517e",
+			"type" : "function",
+			"z" : "3c145c24.dda594",
+			"name" : "Post-Process Payload",
+			"func" : "msg.mydata.messageout = msg.payload;\nmsg.payload = {};\nmsg.payload.botresponse = msg.mydata;\n\nreturn msg;",
+			"outputs" : 1,
+			"noerr" : 0,
+			"x" : 980,
+			"y" : 420,
+			"wires" : [ [ "acaf942b.aa5278" ] ]
+		},
+		{
+			"id" : "738480c4.f95298",
+			"type" : "function",
+			"z" : "3c145c24.dda594",
+			"name" : "Initial Context",
+			"func" : "msg.params = {\n context: {}\n};\n\nmsg.payload = '';\n\nreturn msg;",
+			"outputs" : 1,
+			"noerr" : 0,
+			"x" : 400,
+			"y" : 480,
+			"wires" : [ [] ]
+		}, {
+			"id" : "8cf7ff60.3f73d8",
+			"type" : "http in",
+			"z" : "3c145c24.dda594",
+			"name" : "ChatBot RESTful API - initial request",
+			"url" : "/botchat",
+			"method" : "get",
+			"upload" : false,
+			"swaggerDoc" : "",
+			"x" : 220,
+			"y" : 560,
+			"wires" : [ [ "738480c4.f95298" ] ]
+		}, {
+			"id" : "be52ba97.94c4a8",
+			"type" : "function",
+			"z" : "3c145c24.dda594",
+			"name" : "initial mydata",
+			"func" : "msg.mydata = {};\nreturn msg;",
+			"outputs" : 1,
+			"noerr" : 0,
+			"x" : 870,
+			"y" : 560,
+			"wires" : [ [ "35bad216.fd517e" ] ]
+		} ]
